@@ -45,7 +45,7 @@ def find_frequency(word: str, freq:dict[str, int]) -> int:
     return min(freqs) if len(freqs) > 0 else -2
 
 def out_cards(cards: list[tuple[str, str]]) -> str:
-    return "\n".join(f"{i}\t{j}" for i, j in cards)
+    return "\n".join(f"{v}\t{i}\t{j}" for v, (i, j) in enumerate(cards))
 
 if __name__ == "__main__":
     
