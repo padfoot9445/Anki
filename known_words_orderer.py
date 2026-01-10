@@ -1,0 +1,1 @@
+(lambda sys: open(sys.argv[2], "w").write("\n".join(f"{j}, {k}" for j, k in sorted(((lambda x: (x[0], int(x[1])) if x[1].strip().isnumeric() else (x[0], -1))(i.split(",")) for i in open(sys.argv[1], "r", encoding="UTF8").readlines()), key=lambda x: x[1], reverse=True))))(__import__("sys"))
