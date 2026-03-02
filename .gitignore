@@ -1,7 +1,7 @@
 .env
 *.tsv
 *.txt
-
+.VsCodeCounter
 
 #WORD LISTS
 !it_full.txt
