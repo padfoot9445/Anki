@@ -1,13 +1,31 @@
 import csv
 from enum import Enum
-from typing import Any, cast
+from typing import Any, Final, cast
 from py_linq import Enumerable # type: ignore
+import argparse
+import sys
 
-class IDX(Enum):
-    TAGS = 8
-    FRONT = 3
-    BACK = 4
-    GUID = 0
+parser = argparse.ArgumentParser()
+
+parser.add_argument("src_file", action="store")
+parser.add_argument("dst_file", action="store")
+parser.add_argument("-tags-col", action="store", type=int, default=9)
+parser.add_argument("-front-col", action="store", type=int, default=4)
+parser.add_argument("-back-col", action="store", type=int, default=5)
+parser.add_argument("-guid-col", action="store", type=int, default=1)
+arguments = parser.parse_args(sys.argv[1:])
+class IDX:
+    def __init__(self, value):
+        self.value: Final[int] = value
+    TAGS: "IDX" = cast("IDX", None)
+    FRONT: "IDX" = cast("IDX", None)
+    BACK: "IDX" = cast("IDX", None)
+    GUID: "IDX" = cast("IDX", None)
+
+IDX.TAGS = IDX(arguments.tags_col - 1)
+IDX.FRONT = IDX(arguments.front_col - 1)
+IDX.BACK = IDX(arguments.back_col - 1)
+IDX.GUID = IDX(arguments.guid_col - 1)
 
 class Tags(Enum):
     Review1 = "Duplicate-Handling::review-1"
@@ -25,7 +43,7 @@ def replace_field(idx: IDX, note: list[str], new_value: str) -> list[str]:
     x[idx.value] = new_value
     return x
 
-with open("Selected Notes.txt", "r", encoding="UTF8") as file:
+with open(arguments.src_file, "r", encoding="UTF8") as file:
     __CONTENTS = file.readlines()
     HEADER = __CONTENTS[:6]
     __NOTES = __CONTENTS[6:]
@@ -62,9 +80,9 @@ unwanted: list[list[str]] = (
 
 all_rows = wanted + unwanted
 
-with open("New Selected Notes.txt", "w", encoding="UTF8") as file:
+with open(arguments.dst_file, "w", encoding="UTF8") as file:
     file.writelines(HEADER)
-with open("New Selected Notes.txt", "a", encoding="UTF8", newline='') as file:
+with open(arguments.dst_file, "a", encoding="UTF8", newline='') as file:
     writer = csv.writer(file, delimiter="\t", quotechar="\"")
     writer.writerows(all_rows)
 
