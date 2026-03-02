@@ -37,7 +37,7 @@ def find_bracket(line: str, start: int) -> tuple[int, int] | None:
         return start, current
     except IndexError:
         print(f"Unpaired opening bracket in section beginning {start} in {line}")
-        return None
+        return start, len(line) - 1
 
 
 
