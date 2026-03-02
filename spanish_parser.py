@@ -50,4 +50,4 @@ with open("spanish.txt", "r", encoding="UTF8") as file:
     words = [line_to_word_pair(line.strip()) for line in file]
 
 with open("out_spanish.txt", "w", encoding="UTF8") as file:
-    file.write("\n".join(f"{spanish}|{english}" for spanish, english in words))
+    file.write("\n".join(f"{spanish}\t{english}" for spanish, english in words))
