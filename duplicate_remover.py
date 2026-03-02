@@ -9,10 +9,10 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("src_file", action="store")
 parser.add_argument("dst_file", action="store")
-parser.add_argument("-tags-col", action="store", type=int, default=9)
-parser.add_argument("-front-col", action="store", type=int, default=4)
-parser.add_argument("-back-col", action="store", type=int, default=5)
-parser.add_argument("-guid-col", action="store", type=int, default=1)
+parser.add_argument("--tags-col", action="store", type=int, default=9)
+parser.add_argument("--front-col", action="store", type=int, default=4)
+parser.add_argument("--back-col", action="store", type=int, default=5)
+parser.add_argument("--guid-col", action="store", type=int, default=1)
 arguments = parser.parse_args(sys.argv[1:])
 class IDX:
     def __init__(self, value):
